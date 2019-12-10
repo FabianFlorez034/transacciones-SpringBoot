@@ -18,4 +18,6 @@ public interface IServiceCuenta {
 
     void Transferencia(TranssaccionesDTO transsaccionesDTO)throws Exception;
 
+
+
 }

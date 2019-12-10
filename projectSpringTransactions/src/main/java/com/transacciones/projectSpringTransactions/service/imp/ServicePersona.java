@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.transacciones.projectSpringTransactions.repository.IRepositoryPersona;
 import com.transacciones.projectSpringTransactions.service.IServicePersona;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,12 +33,13 @@ public class ServicePersona implements IServicePersona {
         Persona searchPErsona = repository.findPersonaByCedula(personaDTO.getCedula());
         if (searchPErsona != null) {
 
+
             throw new ValidarDatos("El número de cédula ya esta registrado");
         }
-        if (personaDTO.getCedula() == 0){
-            throw new  Exception("Ingrese el campo cédula");
+        if (personaDTO.getCedula() == 0) {
+            throw new Exception("Ingrese el campo cédula");
         }
-        if (personaDTO.getNombre()==null){
+        if (personaDTO.getNombre() == null) {
             throw new Exception("Ingrese el campo nombre");
         }
 
@@ -80,7 +82,7 @@ public class ServicePersona implements IServicePersona {
 
             throw new Exception("El id no está registrado");
 
-        if (searchPersonaByCedula!=null)
+        if (searchPersonaByCedula != null)
             throw new Exception("Número de cédula no valido, ya pertenece a otra persona.");
 
         searchPersonaById.get().setCedula(personaDTO.getCedula());
@@ -100,11 +102,32 @@ public class ServicePersona implements IServicePersona {
     }
 
     @Override
-    public List<Persona> findAll() throws Exception {
+    public List<PersonaDTO> findAll() throws Exception {
+        List<Persona> allPeople = repository.findAll();
 
-        List<Persona>  allPeople = repository.findAll();
+        List<PersonaDTO> listPersonaDto = new ArrayList<>();
 
-        return allPeople;
+        for (Persona persona : allPeople) {
+            listPersonaDto.add(PersonaDTO.builder()
+                    .cedula(persona.getCedula())
+                    .nombre(persona.getNombre())
+                    .build()
+
+            );
+        }
+
+        return listPersonaDto;
+    }
+
+    @Override
+    public void deletePerson(int cedula) throws Exception {
+
+        Persona persona = repository.findPersonaByCedula(cedula);
+        if (persona == null)
+            throw new Exception("El número de cédula no exite");
+
+        repository.delete(persona);
+
     }
 
 

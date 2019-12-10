@@ -43,8 +43,6 @@ public class Cuenta implements Serializable {
     @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
     @ManyToOne(optional = false)
     private Persona idPersona;
-    @JoinColumn(name = "id_banco", referencedColumnName = "id_banco")
-    @ManyToOne(optional = false)
-    private Banco idBanco;
+
 
 }

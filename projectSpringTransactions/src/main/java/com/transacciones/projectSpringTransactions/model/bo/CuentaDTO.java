@@ -16,7 +16,7 @@ public class CuentaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+
     private double saldo;
     private Date fechaExpiracion;
     private Integer idPersona;

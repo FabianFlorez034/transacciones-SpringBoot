@@ -17,5 +17,7 @@ public interface IServicePersona {
 
     void updatePerson(Integer id_persona, PersonaDTO personaDTO)throws Exception;
 
-    List<Persona> findAll()throws Exception;
+    List<PersonaDTO> findAll()throws Exception;
+
+    void deletePerson(int cedula)throws Exception;
 }

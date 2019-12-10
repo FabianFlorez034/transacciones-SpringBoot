@@ -60,9 +60,19 @@ public class ControllerPersona {
     @GetMapping("/personas")
     public ResponseEntity<?> findAll(){
         try {
-            List<Persona> listaPersonas = servicePersona.findAll();
+            List<PersonaDTO> listaPersonas = servicePersona.findAll();
             return new ResponseEntity<>(listaPersonas,HttpStatus.OK);
         } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+        }
+
+        @DeleteMapping("/delete/{cedula}")
+    public ResponseEntity<?> delete(@PathVariable int cedula){
+        try {
+           servicePersona.deletePerson(cedula);
+           return new ResponseEntity<>("Usuario eliminado correctamente", HttpStatus.OK);
+        }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
         }
